@@ -4,6 +4,7 @@ import Home from "../views/Home.vue";
 
 Vue.use(VueRouter);
 
+// Vuex
 const routes: Array<RouteConfig> = [
   {
     path: "/",
