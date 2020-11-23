@@ -1,6 +1,4 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue";
+import Vuex from "vuex";
 
-export default new Vuex.Store({
-
-})
+export default new Vuex.Store({});

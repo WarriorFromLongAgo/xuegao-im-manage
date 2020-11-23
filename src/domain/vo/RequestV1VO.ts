@@ -1,16 +1,15 @@
 class RequestV1VO {
-    source: string;
-    target: string;
-    value: any;
+  source: string;
+  target: string;
+  value: any;
 
-    // 默认值 200，''，
-    constructor(source: string = '', target: string = '', value: any) {
-        this.source = source
-        this.target = target
-        this.value = value
-    }
-
+  // 默认值 200，''，
+  constructor(source = "", target = "", value: any) {
+    this.source = source;
+    this.target = target;
+    this.value = value;
+  }
 }
 
 // 对象外抛
-export default RequestV1VO
+export default RequestV1VO;
