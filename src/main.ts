@@ -8,6 +8,7 @@ import dataAction from "@/router/dataAction";
 
 Vue.config.productionTip = false;
 
+// 直接在所有的地方，直接运行，只要打开任何网页就直接运行
 const newDataItem = new DataItem(1, 1, "content 1");
 new dataAction().addData(newDataItem);
 

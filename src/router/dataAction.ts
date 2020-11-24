@@ -21,7 +21,7 @@ class DataAction {
     this.memoList = this.readData();
   }
 
-  readData() {
+  readData(): any {
     const strData: string | null = localStorage.getItem(this.dataKey);
     let arrData: any[] = [];
     if (strData != null) {
