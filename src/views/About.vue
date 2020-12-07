@@ -1,11 +1,24 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <h1>{{ firstName }}</h1>
+    <h1>{{ lastName }}</h1>
+    <h1>{{ fullName }}</h1>
+    <h1></h1>
+    <button @click="modifyFullName">修改fullName</button>
+    <hr />
+    <!-- v-bind  将所有的属性都传输 -->
+    <user v-for="user in userList" :key="user.id" v-bind="user"> </user>
+    <hr />
+    <!-- <div v-for="user in userList" :key="user.id" v-bind="user">
+      {{ user.name }}--{{ user.SEX[user.sex] }}--{{ user.age }}
+    </div> -->
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Watch, Vue } from "vue-property-decorator";
+import User from "../components/User.vue";
 // 装饰器
 // vue-property-decorator
 // @Component
@@ -29,12 +42,74 @@ import { Component, Vue } from "vue-property-decorator";
 //     }
 //   },
 //   computed:{
-
+//      fullName: {
+//        get () {
+//          return this.firstName + " === " + this.lastName;
+//        },
+//        set () {
+//
+//        }
+//     }
 //   }
 // }
-@Component
+@Component({
+  components: {
+    User,
+  },
+})
 export default class About extends Vue {
   firstName = "xuegao1";
   lastName = "xuegao2";
+  userList: Array<IUser> = [
+    {
+      id: "1",
+      name: "张三1",
+      age: "10",
+      sex: 1,
+    },
+    {
+      id: "2",
+      name: "张三2",
+      age: "20",
+      sex: 2,
+    },
+    {
+      id: "3",
+      name: "张三3",
+      age: "30",
+      sex: 0,
+    },
+  ];
+  get fullName() {
+    return this.firstName + " === " + this.lastName;
+  }
+  set fullName(value) {
+    const arr = value.split(" ");
+    this.firstName = arr[0];
+    this.lastName = arr[1];
+  }
+  modifyFullName() {
+    this.fullName = "xuegaomo xuegaomo";
+  }
+
+  @Watch("firstName")
+  onFirstNameChange(newVal: any, oldVal: any) {
+    console.log(newVal);
+    console.log(oldVal);
+  }
+
+  // 钩子函数
+  created() {
+    console.log("this is created");
+  }
+  mounted() {
+    console.log("this is mounted");
+  }
+}
+interface IUser {
+  id: string;
+  name: string;
+  age: string;
+  sex?: number;
 }
 </script>
