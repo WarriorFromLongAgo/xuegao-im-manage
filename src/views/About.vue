@@ -8,7 +8,14 @@
     <button @click="modifyFullName">修改fullName</button>
     <hr />
     <!-- v-bind  将所有的属性都传输 -->
-    <user v-for="user in userList" :key="user.id" v-bind="user"> </user>
+    <user
+      v-for="user in userList"
+      :key="user.id"
+      v-bind="user"
+      @on-remove="removeUser"
+      @change-age="changeUserAge"
+    >
+    </user>
     <hr />
     <!-- <div v-for="user in userList" :key="user.id" v-bind="user">
       {{ user.name }}--{{ user.SEX[user.sex] }}--{{ user.age }}
@@ -104,6 +111,20 @@ export default class About extends Vue {
   }
   mounted() {
     console.log("this is mounted");
+  }
+
+  removeUser(id: string) {
+    console.log(id);
+    console.log(this.userList.findIndex((user) => user.id === id));
+    const index: number = this.userList.findIndex((user) => user.id === id);
+    this.userList.splice(index, 1);
+  }
+
+  changeUserAge(id: string) {
+    console.log(id);
+    console.log(this.userList.findIndex((user) => user.id === id));
+    console.log(this.userList.find((user) => user.id === id));
+    const user: IUser =  this.userList.find((user) => user.id === id);
   }
 }
 interface IUser {
