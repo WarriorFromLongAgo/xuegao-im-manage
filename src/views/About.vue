@@ -14,18 +14,25 @@
       v-bind="user"
       @on-remove="removeUser"
       @change-age="changeUserAge"
+      v-model="firstName"
     >
     </user>
     <hr />
     <!-- <div v-for="user in userList" :key="user.id" v-bind="user">
       {{ user.name }}--{{ user.SEX[user.sex] }}--{{ user.age }}
     </div> -->
+
+    <hr />
+
+    <p>{{ count }} <button @click="increment">+1</button></p>
+    <p>{{ filterList.join("-") }}</p>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Watch, Vue } from "vue-property-decorator";
-import User from "../components/User.vue";
+import User from "@/components/User.vue";
+import { AboutStore } from "@/store/module/about";
 // 装饰器
 // vue-property-decorator
 // @Component
@@ -108,6 +115,10 @@ export default class About extends Vue {
   // 钩子函数
   created() {
     console.log("this is created");
+    AboutStore.getList();
+    AboutStore.getList().then(response => {
+      console.log("getList 执行成功");
+    });
   }
   mounted() {
     console.log("this is mounted");
@@ -124,7 +135,25 @@ export default class About extends Vue {
     console.log(id);
     console.log(this.userList.findIndex((user) => user.id === id));
     console.log(this.userList.find((user) => user.id === id));
-    const user: IUser =  this.userList.find((user) => user.id === id);
+    const user = this.userList.find((user) => user.id === id);
+    if (user === undefined) {
+      throw new Error("user is undefined");
+    }
+    let ageNumber = Number.parseInt(user.age);
+    ageNumber++;
+    user.age = ageNumber.toString();
+  }
+
+  // get 计算属性
+  get count(): number {
+    return AboutStore.count;
+  }
+
+  get filterList(): Array<number> {
+    return AboutStore.filterList;
+  }
+  increment() {
+    AboutStore.updateCount(1);
   }
 }
 interface IUser {
